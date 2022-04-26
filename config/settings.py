@@ -42,7 +42,7 @@ SECRET_KEY = get_secret('SECRET_KEY')
 #### for Django Secret Key ####
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [*'', '.pythonanywhere.com']
 
