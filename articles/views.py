@@ -31,6 +31,7 @@ def create(request):
     }
     return render(request, 'articles/create.html', context)
 
+
 @require_safe
 def detail(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
