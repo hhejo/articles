@@ -6,7 +6,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-lg-0">
-        {% comment %} <li class="nav-item">
+        <!--
+        <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
         <li class="nav-item">
@@ -25,8 +26,8 @@
         </li>
         <li class="nav-item">
           <a class="nav-link disabled">Disabled</a>
-        </li> {% endcomment %}
-
+        </li>
+        -->
         {% if user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link">Hello, {{ user }}</a>
@@ -40,6 +41,7 @@
             <button type="submit" class="btn btn-outline-secondary">Logout</button>
           </form>
         </li>
+        <!--
         <li class="nav-item">
           <a href="{% url 'accounts:update' %}" class="nav-link">Modify</a>
         </li>
@@ -49,6 +51,7 @@
             <button type="submit" class="btn btn-outline-secondary">Signout</button>
           </form>
         </li>
+        -->
         {% else %}
           <li class="nav-item">
             <a href="{% url 'accounts:login' %}" class="nav-link">Login</a>
@@ -57,12 +60,13 @@
             <a href="{% url 'accounts:signup' %}" class="nav-link">Signup</a>
           </li>
         {% endif %}
-
       </ul>
-      {% comment %} <form class="d-flex">
+      <!--
+      <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
-      </form> {% endcomment %}
+      </form>
+      -->
     </div>
   </div>
 </nav>
