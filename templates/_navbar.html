@@ -6,28 +6,6 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-lg-0">
-        <!--
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
-        </li>
-        -->
         {% if user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link">Hello, {{ user }}</a>
@@ -41,17 +19,6 @@
             <button type="submit" class="btn btn-outline-secondary">Logout</button>
           </form>
         </li>
-        <!--
-        <li class="nav-item">
-          <a href="{% url 'accounts:update' %}" class="nav-link">Modify</a>
-        </li>
-        <li class="nav-item">
-          <form action="{% url 'accounts:delete' %}" method="post" class="d-flex">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-outline-secondary">Signout</button>
-          </form>
-        </li>
-        -->
         {% else %}
           <li class="nav-item">
             <a href="{% url 'accounts:login' %}" class="nav-link">Login</a>
@@ -61,12 +28,6 @@
           </li>
         {% endif %}
       </ul>
-      <!--
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-      -->
     </div>
   </div>
 </nav>
