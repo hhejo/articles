@@ -1,6 +1,141 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container my-3">
+  <h2 class="border-bottom py-2">{{ article.title }}</h2>
+  <div class="row my-3">
+    <div class="col-1">
+      <div class="bg-light text-center p-3 border fw-bolder mb-1"></div>
+      <div class="d-grid gap-1">
+        <a href="" class="recommend btn btn-sm btn-secondary">추천</a>
+      </div>
+    </div>
+    <div class="col-11">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-text mb-2">{{ article.content }}</div>
+          <div class="d-flex justify-content-end">
+            {% if article.updated_at %}
+            <div class="badge bg-light p-2 text-start mx-3 text-dark">
+              <div class="mb-2">수정일</div>
+              <div>{{ article.updated_at }}</div>
+            </div>
+            {% endif %}
+            <div class="badge bg-light text-dark p-2 text-start">
+              <div class="mb-2">{{ article.user.username }}</div>
+              <div>{{ article.created_at }}</div>
+            </div>
+          </div>
+          {% if request.user == article.user %}
+          <div class="my-3">
+            <a href="{% url 'articles:update' article.pk %}" class="btn btn-sm btn-outline-secondary">수정</a>
+            {% comment %} <a href="#" class="delete btn btn-sm btn-outline-secondary" data-uri="{% url 'pybo:question_delete' question.id %}">삭제</a> {% endcomment %}
+            <a href="{% url 'articles:delete' article.pk %}" class="delete btn btn-sm btn-outline-secondary">삭제</a>
+          </div>
+          {% endif %}
+          {% comment %} <a href="{% url 'articles:index' %}" class="btn btn-sm btn-outline-secondary">BACK</a> {% endcomment %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h6 class="border-bottom my-3 py-2">{{ article.comment_set.count }}개의 댓글이 있습니다.</h6>
+  <div class="card">
+    <div class="card-body">
+      <!-- 답변 댓글 Start -->
+      {% if article.comment_set.count > 0 %}
+      <div class="container">
+        {% for comment in article.comment_set.all %}
+          <a name="comment_{{ comment.id }}"></a>
+          <div class="comment py-2 text-muted">
+            <span style="white-space: pre-line;">{{ comment.content }}</span>
+            <span>
+              - {{ comment.user }}, {{ comment.created_at }}
+              {% if comment.updated_at %}
+              (수정:{{ comment.updated_at }})
+              {% endif %}
+            </span>
+            {% if request.user == comment.user %}
+            {% comment %} <a href="{% url 'articles:comment_modify_answer' comment.id %}" class="small text-decoration-none">수정</a> {% endcomment %}
+            <a href="{% url 'articles:comments_delete' article.pk comment.pk %}" class="small delete text-decoration-none">삭제</a>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="container">
+        <a href="{% url 'articles:comments_create' article.pk %}" class="small text-decoration-none"><small>댓글 추가 ..</small></a>
+      </div>
+
+      {% if request.user.is_authenticated %}
+        <div class="container my-3">
+          <form action="{% url 'articles:comments_create' article.pk %}" method="post" class="post-form my-3">
+            {% csrf_token %}
+            {% comment %} {{ comment_form }} {% endcomment %}
+
+            {% comment %} <label for="content">내용</label> {% endcomment %}
+            <textarea name="content" id="content" cols="5" rows="3" class="form-control my-3">{{ comment_form.content.value|default_if_none:'' }}</textarea>
+
+            <button type="submit" class="btn btn-primary">SUBMIT</button>
+          </form>
+        </div>
+      {% else %}
+        <a href="{% url 'accounts:login' %}">댓글을 작성하려면 로그인하세요.</a>
+      {% endif %}
+
+      <!-- 답변 댓글 End -->
+
+
+      {% comment %} <!-- 수정일, 작성자, 작성일 -->
+      <div class="d-flex justify-content-end">
+        {% if answer.modify_date %}
+        <div class="badge bg-light p-2 text-start mx-3 text-dark">
+          <div class="mb-2">수정일자</div>
+          <div>{{ answer.modify_date }}</div>
+        </div>
+        {% endif %}
+        <div class="badge bg-light text-dark p-2 text-start">
+          <div class="mb-2">{{ answer.author.username }}</div>
+          <div>{{ answer.create_date }}</div>
+        </div>
+      </div>
+      <!-- 수정 버튼, 삭제 버튼 -->
+      {% if request.user == answer.author %}
+      <div class="my-3">
+        <a href="{% url 'pybo:answer_modify' answer.id %}" class="btn btn-sm btn-outline-secondary">수정</a>
+        <a href="{% url 'pybo:answer_delete' answer.id %}" class="delete btn btn-sm btn-outline-secondary">삭제</a>
+      </div>
+      {% endif %} {% endcomment %}
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <h1>DETAIL</h1>
 <div>
   <!-- 게시글 -->
@@ -58,4 +193,3 @@
     <a href="{% url 'accounts:login' %}">댓글을 작성하려면 로그인하세요.</a>
   {% endif %}
 </div>
-{% endblock %}
