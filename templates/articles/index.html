@@ -18,7 +18,16 @@
         <tr>
           <td>{{ article.pk }}</td>
           <td></td>
-          <td><a href="{% url 'articles:detail' article.pk %}" class="text-decoration-none">{{ article.title }}</a></td>
+          <td>
+            <a href="{% url 'articles:detail' article.pk %}" class="text-decoration-none">
+              {{ article.title }}
+              {% comment %} <span class="badge bg-warning text-dark px-2 py-1">{{ article.comment_set.all.count }}</span> {% endcomment %}
+              
+            </a>
+            {% if article.comment_set.all.count > 0 %}
+              <span class="small text-danger px-1 py-2">{{ article.comment_set.all.count }}</span>
+            {% endif %}
+          </td>
           <td><a href="{% url 'accounts:profile' article.user.username %}" class="text-decoration-none">{{ article.user }}</a></td>
           <td>{{ article.created_at }}</td>
         </tr>
