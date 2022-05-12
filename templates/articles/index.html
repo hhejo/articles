@@ -32,13 +32,19 @@
             </a>
             <!-- 댓글 개수 -->
             {% if article.comment_set.all.count > 0 %}
-              <span class="small text-danger px-1 py-2">{{ article.comment_set.all.count }}</span>
+              <span class="small text-danger px-1 py-2">
+                {{ article.comment_set.all.count }}
+              </span>
             {% endif %}
           </td>
           <!-- username -->
-          <td><a href="{% url 'accounts:profile' article.user.username %}" class="text-decoration-none">{{ article.user }}</a></td>
+          <td>
+            <a href="{% url 'accounts:profile' article.user.username %}" class="small text-decoration-none">{{ article.user }}</a>
+          </td>
           <!-- created_at -->
-          <td>{{ article.created_at|date:'y-m-d H:i' }}</td>
+          <td>
+            <span class="small">{{ article.created_at|date:'y-m-d H:i' }}</span>
+          </td>
         </tr>
       {% endfor %}
     </tbody>

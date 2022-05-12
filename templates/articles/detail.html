@@ -12,7 +12,7 @@
         {% comment %} <a href="" class="recommend btn btn-sm btn-secondary">추천</a> {% endcomment %}
       </div>
     </div>
-    <div class="col-11">
+    <div>
       <div class="card">
         <div class="card-body">
           <div class="card-text mb-2">{{ article.content|linebreaks }}</div>
@@ -49,17 +49,15 @@
         <div class="container">
           {% for comment in article.comment_set.all %}
             <div class="comment py-2">
-              <span style="white-space: pre-line;">{{ comment.content|linebreaks }}</span>
-              <span class="small text-muted">
-                - {{ comment.user }} {{ comment.created_at|date:'y-m-d H:i' }}
-                {% comment %} {% if comment.updated_at %}
-                (수정:{{ comment.updated_at }})
-                {% endif %} {% endcomment %}
-              </span>
-              {% if request.user == comment.user %}
-              {% comment %} <a href="{% url 'articles:comment_modify_answer' comment.id %}" class="small text-decoration-none">수정</a> {% endcomment %}
-              <a href="{% url 'articles:comments_delete' article.pk comment.pk %}" class="small delete text-decoration-none">삭제</a>
-              {% endif %}
+              <div class="small text-muted">
+                {{ comment.user }} {{ comment.created_at|date:'y-m-d H:i' }}
+                {% if request.user == comment.user %}
+                  <a href="{% url 'articles:comments_delete' article.pk comment.pk %}" class="small delete text-decoration-none">
+                    삭제
+                  </a>
+                {% endif %}
+              </div>
+              <span style="white-space: pre-line;">{{ comment.content|linebreaksbr }}</span>
             </div>
           {% endfor %}
         </div>
@@ -122,12 +120,6 @@
 
 <h1>DETAIL</h1>
 <div>
-  <!-- 게시글 -->
-  <p>{{ article.pk }}</p>
-  <p>{{ article.title }}</p>
-  <p>{{ article.content }}</p>
-  <p>{{ article.created_at }}</p>
-  <p>{{ article.updated_at }}</p>
   <!-- 좋아요 버튼 -->
   <form action="{% url 'articles:likes' article.pk %}" method="post">
     {% csrf_token %}
